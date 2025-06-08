@@ -4,6 +4,7 @@ import { Harvester } from "modules/harvester";
 import { Upgrader } from "modules/upgrader";
 import { Builder } from "modules/builder";
 import { ConstructionSpawner } from "modules/construction-spawner";
+import { DebugVisuals } from "utils/debugging-visuals";
 
 declare global {
   /*
@@ -19,13 +20,15 @@ declare global {
     uuid: number;
     log: any;
   }
+  interface RoomMemory {
+    roadsToSources?: boolean
+
+  }
 
   interface CreepMemory {
     role: string;
     room?: string;
     working?: boolean;
-    upgrading?: boolean;
-    building?: boolean;
   }
 
   // Syntax for adding proprties to `global` (ex "global.log")
@@ -39,6 +42,7 @@ declare global {
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 export const loop = ErrorMapper.wrapLoop(() => {
+  DebugVisuals.DrawDebugText();
   // Automatically delete memory of missing creeps
   for (const name in Memory.creeps) {
     if (!(name in Game.creeps)) {
@@ -47,6 +51,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
   }
   Spawner.Spawn()
   ConstructionSpawner.CreateExtensionSites();
+  ConstructionSpawner.CreateRoadsToSources()
 
   for (const name in Game.creeps) {
     const creep = Game.creeps[name];

@@ -7,9 +7,9 @@ export class Spawner {
 
         // Define desired creep counts based on room conditions
         const desiredCreepCounts = {
-            [roles.harvester]: room.energyAvailable < room.energyCapacityAvailable ? 5 : 3,
+            [roles.harvester]: room.energyAvailable < room.energyCapacityAvailable ? 6 : 3,
             [roles.upgrader]: 2,
-            [roles.builder]: room.find(FIND_CONSTRUCTION_SITES).length > 0 ? 2 : 0,
+            [roles.builder]: room.find(FIND_CONSTRUCTION_SITES).length > 0 ? 2 : 1,
         };
 
         // Count existing creeps by role
@@ -33,9 +33,9 @@ export class Spawner {
     private static getBodyForRole(role: string, energyAvailable: number): BodyPartConstant[] {
         // Define body configurations for each role
         const bodyConfigs: { [role: string]: BodyPartConstant[][] } = {
-            [roles.harvester]: [[WORK, CARRY, MOVE], [WORK, WORK, CARRY, MOVE, MOVE]],
-            [roles.upgrader]: [[WORK, CARRY, MOVE], [WORK, WORK, CARRY, MOVE, MOVE]],
-            [roles.builder]: [[WORK, CARRY, MOVE], [WORK, CARRY, CARRY, MOVE, MOVE]],
+            [roles.harvester]: [[WORK, CARRY, MOVE], [WORK, WORK, CARRY, MOVE, MOVE, MOVE]],
+            [roles.upgrader]: [[WORK, CARRY, MOVE], [WORK, WORK, CARRY, MOVE, MOVE, MOVE]],
+            [roles.builder]: [[WORK, CARRY, MOVE], [WORK, CARRY, CARRY, MOVE, MOVE, MOVE]],
         };
 
         // Select the best body configuration based on available energy
