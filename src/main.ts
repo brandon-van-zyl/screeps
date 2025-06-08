@@ -3,6 +3,7 @@ import { Spawner } from "./modules/spawner"
 import { Harvester } from "modules/harvester";
 import { Upgrader } from "modules/upgrader";
 import { Builder } from "modules/builder";
+import { COnstructionSpawner } from "modules/construction-spawner";
 
 declare global {
   /*
@@ -38,8 +39,6 @@ declare global {
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 export const loop = ErrorMapper.wrapLoop(() => {
-   console.log(`Current game tick is ${Game.time}`);
-
   // Automatically delete memory of missing creeps
   for (const name in Memory.creeps) {
     if (!(name in Game.creeps)) {
@@ -47,7 +46,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
     }
   }
   Spawner.Spawn()
-  Builder.CreateContructionSites();
+  COnstructionSpawner.CreateContructionSites();
 
   for (const name in Game.creeps) {
     const creep = Game.creeps[name];
