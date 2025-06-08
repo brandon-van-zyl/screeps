@@ -1,5 +1,5 @@
-export class COnstructionSpawner{
-    	public static CreateContructionSites() {
+export class ConstructionSpawner{
+    	public static CreateExtensionSites() {
 		if (Game.spawns["Spawn1"].spawning) {
 			return;
 		}
@@ -29,8 +29,8 @@ export class COnstructionSpawner{
 
 		if (room.controller && (extensionStructures.length + extensionContructionSites.length) < extensionPerLevel[room.controller?.level]) {
 			var spawner = Game.spawns["Spawn1"];
-			var lastConstructionSite = extensionStructures[extensionStructures.length - 1];
-			var lastPos = lastConstructionSite ? lastConstructionSite.pos : spawner.pos;
+			var lastConstructionSite = extensionContructionSites[extensionContructionSites.length - 1];
+			var lastPos =  lastConstructionSite?.pos ?? spawner.pos;
 			console.log("Creating construction site for extension at: " + (lastPos.x - 1) + ", " + lastPos.y);
 			room.createConstructionSite(lastPos.x - 1, lastPos.y, STRUCTURE_EXTENSION);
 		}

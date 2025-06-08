@@ -3,7 +3,7 @@ import { Spawner } from "./modules/spawner"
 import { Harvester } from "modules/harvester";
 import { Upgrader } from "modules/upgrader";
 import { Builder } from "modules/builder";
-import { COnstructionSpawner } from "modules/construction-spawner";
+import { ConstructionSpawner } from "modules/construction-spawner";
 
 declare global {
   /*
@@ -46,7 +46,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
     }
   }
   Spawner.Spawn()
-  COnstructionSpawner.CreateContructionSites();
+  ConstructionSpawner.CreateExtensionSites();
 
   for (const name in Game.creeps) {
     const creep = Game.creeps[name];
