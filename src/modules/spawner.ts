@@ -19,11 +19,13 @@ export class Spawner {
         for (const role in desiredCreepCounts) {
             if ((creepCounts[role] || 0) < desiredCreepCounts[role]) {
                 const newName = `${role.charAt(0).toUpperCase() + role.slice(1)}${Game.time}`;
-                console.log(`Spawning new ${role}: ${newName}`);
 
                 const body = this.getBodyForRole(role, room.energyAvailable);
-                spawn.spawnCreep(body, newName, { memory: { role } });
-                break; // Spawn one creep at a time
+                if(this.canSpawnCreep(body, room.energyAvailable)) {
+                    console.log(`Spawning new ${role}: ${newName}`);
+                    spawn.spawnCreep(body, newName, { memory: { role } });
+                    break; // Spawn one creep at a time
+                }
             }
         }
     }
@@ -48,5 +50,9 @@ export class Spawner {
             [MOVE]: 50,
         };
         return body.reduce((cost, part) => cost + bodyPartCosts[part], 0);
+    }
+
+    private static canSpawnCreep(body: BodyPartConstant[], energyAvailable: number): boolean {
+        return this.calculateBodyCost(body) <= energyAvailable;
     }
 }
